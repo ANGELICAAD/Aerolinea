@@ -93,16 +93,101 @@ export const Ciudad = () => {
     const [checkedRegreso, setCheckedRegreso] = useState([]);
 
     const [cantidad, setCantidad] = useState('');
-    console.log(cantidad);
 
     const [precioTotal, setPrecioTotal] = useState('');
     const calculoPrecioTotal = (precioIda, precioRegreso, cantidadPersonas) => {
-        console.log("Precio Ida " + precioIda + ", Precio Regreso " + precioIda + ", Cantidad " + cantidadPersonas);
         var pIda = precioIda * cantidadPersonas;
         var pRegreso = precioRegreso * cantidadPersonas;
         var pTotal = pIda + pRegreso;
-        console.log(pTotal);
         setPrecioTotal(pTotal);
+    }
+
+    const [pagina, setPagina] = useState(0);
+    const [infoPasajeros, setinfoPasajeros] = useState([]);
+    const crearInfo = () => {
+        let arrBase = [];
+        for (let i = 0; i < cantidad; i++) {
+            const auxliar = {
+                nombre: '',
+                apellido: '',
+                telefono: '',
+                email: '',
+                edad: '',
+                numPasaporte: ''
+            }
+            arrBase.push(auxliar)
+        }
+        setinfoPasajeros(arrBase);
+    }
+
+    const modificarInfo = (pagina, nombre, value) => {
+        const local = [...infoPasajeros]
+        local[pagina] = {
+            ...local[pagina],
+            [nombre]: value
+        }
+        setinfoPasajeros(local)
+    }
+
+    // console.log(infoPasajeros);
+
+    const guardarPasajeros = async () => {
+        await axios.post('http://localhost:8080/api/pasajero', infoPasajeros)
+            .then(
+                (response) => {
+                    listHistorial(infoPasajeros[0]);
+                    if (listHistorial(infoPasajeros[0]).length != 0) {
+                        console.log(response);
+                    } else {
+                        crearhistorial(infoPasajeros[0]);
+                    }
+                }
+            ).catch(
+                (err) => {
+                    console.log(err);
+                }
+            )
+    }
+
+    const [infoHistorial, setinfoHistorial] = useState([]);
+    const crearInfoHistorial = (idPas) => {
+        const auxliar = {
+            cantViajes: '',
+            cantMillas: '',
+            idPasajero: {
+                idPasajero: idPas
+            }
+        }
+        setinfoHistorial(auxliar);
+    }
+
+    const crearhistorial = async () => {
+        await axios.post('http://localhost:8080/api/historial', infoHistorial)
+            .then(
+                (response) => {
+                    console.log(response);
+                    crearInfoHistorial(infoHistorial);
+                }
+            ).catch(
+                (err) => {
+                    console.log(err);
+                }
+            )
+    }
+
+    const [historial, setHistorial] = useState([]);
+    const listHistorial = async (idPas) => {
+        await axios.get(`http://localhost:8080/api/historial/listHistorial/${idPas}`)
+            .then(
+                (response) => {
+                    console.log(response);
+                    setHistorial(response.data);
+                }
+            ).catch(
+                (err) => {
+                    console.log(err);
+                }
+            )
     }
 
     useEffect(() => {
@@ -286,11 +371,127 @@ export const Ciudad = () => {
                         </Col>
                         <Col md="auto"></Col>
                         <Col xs lg="2">
-                            <Button variant="primary" onClick={() => calculoPrecioTotal(checkedIda, checkedRegreso, cantidad)}>Continuar</Button>
+                            <Button
+                                variant="primary"
+                                onClick={
+                                    () => {
+                                        calculoPrecioTotal(checkedIda, checkedRegreso, cantidad)
+                                        crearInfo()
+                                    }
+                                }
+                            >
+                                Continuar
+                            </Button>
                         </Col>
                     </Row>
                 </Container>
             </div>
+            {
+                infoPasajeros.length > 0
+                &&
+                <div className="formulario">
+                    <h1>Información de los pasajeros {pagina + 1}</h1>
+                    <Form>
+                        <Form.Group className="mb-3" controlId="formGroupEmail">
+                            <Form.Label>Nombre</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Nombre"
+                                value={infoPasajeros[pagina].nombre}
+                                name="nombre"
+                                onChange={
+                                    (e) => {
+                                        modificarInfo(pagina, "nombre", e.target.value)
+                                    }
+                                }
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formGroupPassword">
+                            <Form.Label>Apellido</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Apellido"
+                                value={infoPasajeros[pagina].apellido}
+                                name="apellido"
+                                onChange={
+                                    (e) => {
+                                        modificarInfo(pagina, "apellido", e.target.value)
+                                    }
+                                }
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formGroupPassword">
+                            <Form.Label>Telefono</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Telefono"
+                                value={infoPasajeros[pagina].telefono}
+                                name="telefono"
+                                onChange={
+                                    (e) => {
+                                        modificarInfo(pagina, "telefono", e.target.value)
+                                    }
+                                }
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formGroupPassword">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                                type="email"
+                                placeholder="Email"
+                                value={infoPasajeros[pagina].email}
+                                name="email"
+                                onChange={
+                                    (e) => {
+                                        modificarInfo(pagina, "email", e.target.value)
+                                    }
+                                }
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formGroupPassword">
+                            <Form.Label>Edad</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Edad"
+                                value={infoPasajeros[pagina].edad}
+                                name="edad"
+                                onChange={
+                                    (e) => {
+                                        modificarInfo(pagina, "edad", e.target.value)
+                                    }
+                                }
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formGroupPassword">
+                            <Form.Label>Número de pasaporte</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Número de pasaporte"
+                                value={infoPasajeros[pagina].numPasaporte}
+                                name="numPasaporte"
+                                onChange={
+                                    (e) => {
+                                        modificarInfo(pagina, "numPasaporte", e.target.value)
+                                    }
+                                }
+                            />
+                        </Form.Group>
+                        <Button
+                            variant="primary"
+                            onClick={
+                                () => {
+                                    if ((pagina + 1) < cantidad) {
+                                        setPagina(pagina + 1)
+                                    };
+                                    guardarPasajeros();
+                                }
+                            }
+                        >
+                            Siguiente
+                        </Button>
+                    </Form>
+                </div>
+            }
         </div >
     );
 }

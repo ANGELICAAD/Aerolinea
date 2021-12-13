@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "7e32eb7c-abfc-4ef1-bdbc-9913c015ce53",
+		"name": "Aerolinea",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/api/historial/listHistorial/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/historial/listHistorial/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"historial",
+						"listHistorial",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/ciudadorigen/origen",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/ciudadorigen/origen",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ciudadorigen",
+						"origen"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/ciudadorigen/destino/Bogotá",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/ciudadorigen/destino/Bogotá",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ciudadorigen",
+						"destino",
+						"Bogotá"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/vuelos/vuelosida/Bogotá&&fecha?fechaVuelo=2021-11-05",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/vuelos/vuelosida/Bogotá&&Armenia&&fecha?fechaVuelo=2021-11-05",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vuelos",
+						"vuelosida",
+						"Bogotá&&Armenia&&fecha"
+					],
+					"query": [
+						{
+							"key": "fechaVuelo",
+							"value": "2021-11-05"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/vuelos/vuelosregreso/Armenia&&Bogotá&&fecha?fechaVuelo=2021-11-05",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/vuelos/vuelosregreso/Armenia&&Bogotá&&fecha?fechaVuelo=2021-11-05",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"vuelos",
+						"vuelosregreso",
+						"Armenia&&Bogotá&&fecha"
+					],
+					"query": [
+						{
+							"key": "fechaVuelo",
+							"value": "2021-11-05"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/tiquetes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idTiquete\": 6,\r\n    \"totalPago\":\"3900000\",\r\n    \"idVuelo\":{\r\n        \"idVuelo\":\"1\",\r\n        \"idRuta\":{\r\n            \"idRuta\":\"1\",\r\n            \"idCiudadOrigen\":{\r\n                \"idCiudadOrigen\":\"1\"\r\n            }\r\n        }      \r\n    },\r\n    \"idPasajero\":{\r\n        \"idPasajero\":\"2\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/tiquetes",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tiquetes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/pasajero",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idPasajero\":\"-1\",\r\n    \"nombre\":\"Andres\",\r\n    \"apellido\":\"Marín\",\r\n    \"telefono\":\"3105723542\",\r\n    \"correo\":\"amarin@gmail.com\",\r\n    \"edad\":\"28\",\r\n    \"numPasaporte\":\"AV2082\",\r\n    \"fechaVencimientoVisa\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/pasajero",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"pasajero"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/api/historial",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idHistorial\":\"-1\",\r\n    \"cantViajes\":\"10\",\r\n    \"cantMillas\":\"140\",\r\n    \"idPasajero\":{\r\n        \"idPasajero\":\"2\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/historial",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"historial"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
